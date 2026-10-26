@@ -371,7 +371,7 @@ function playerHome(msg) {
     try { const q = await api("quiz_state", { p_code: code }); if (!q) throw new Error("QUIZ_NOT_FOUND"); P.quiz = q; store.set("qb_last_code", code); playerName(); }
     catch (e) { showErr(errText(e)); $("#go").disabled = false; }
   };
-  $("#go").onclick = go; $("#code").onkeydown = e => e.key === "Enter" && go();
+  $("#go").onclick = go; $("#code").onkeydown = e =>   { if (e.key === "Enter") go(); };
   if (saved) $("#back").onclick = () => { $("#code").value = last; go(); };
   if (urlCode && !msg) go();
 }
@@ -403,7 +403,7 @@ function playerName() {
       enterQuiz();
     } catch (e) { showErr(errText(e)); $("#go").disabled = false; }
   };
-  $("#go").onclick = go; $("#pin").onkeydown = e => e.key === "Enter" && go();
+  $("#go").onclick = go; $("#pin").onkeydown = e =>    { if (e.key === "Enter") go(); };
 }
 const isTeacher = () => (P.quiz?.settings?.mode || "student") === "teacher";
 function setMe(p) {
@@ -684,7 +684,7 @@ function adminLogin(msg) {
       AUTH.set({ token: r.token, username: r.username }); r.must_change ? changePassword(true) : adminHome(); }
     catch (e) { showErr(errText(e)); $("#go").disabled = false; }
   };
-  $("#go").onclick = go; $("#p").onkeydown = e => e.key === "Enter" && go(); $("#p").focus();
+  $("#go").onclick = go; $("#p").onkeydown = e =>    { if (e.key === "Enter") go(); }; $("#p").focus();
 }
 
 function changePassword(forced) {
